@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { gsap } from 'gsap';
 
 import Stats from 'three/addons/libs/stats.module.js';
 
@@ -70,6 +71,29 @@ function init() {
 	controls = new TouchController(camera, renderer.domElement);
 	controls.movementSpeed = 150;
 	controls.lookSpeed = 0.1;
+
+	const toggleBtn = document.querySelector('.controls__toggle');
+
+	toggleBtn.addEventListener('click', () => {
+		// console.log('close');
+		if (toggleBtn.classList.contains('active')) {
+			controls.enabled = false;
+			toggleBtn.classList.remove('active');
+			const tl = gsap.timeline();
+			tl.to('.controls', { transform: 'translateY(100%)' });
+			tl.to('.controls__toggle svg', {
+				rotate: 180,
+			});
+		} else {
+			controls.enabled = true;
+			toggleBtn.classList.add('active');
+			const tl = gsap.timeline();
+			tl.to('.controls', { transform: 'translateY(0)' });
+			tl.to('.controls__toggle svg', {
+				rotate: 0,
+			});
+		}
+	});
 
 	stats = new Stats();
 	container.appendChild(stats.dom);

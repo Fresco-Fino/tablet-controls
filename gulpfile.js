@@ -121,7 +121,7 @@ function watcher() {
 	});
 	watch(paths.sass.watcher).on('change', series(scss, server.reload));
 	watch(paths.bundle.watcher).on('change', series(bundle, server.reload));
-	watch('./**/*.php').on('change', server.reload);
+	watch('./**/*.html').on('change', server.reload);
 }
 
 exports.scss = scss;

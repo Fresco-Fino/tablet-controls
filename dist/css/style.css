@@ -114,7 +114,7 @@ button {
 .controls__right .back {
   bottom: 15px;
 }
-.controls__close {
+.controls__toggle {
   position: absolute;
   top: 0;
   right: 0;

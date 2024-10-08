@@ -31,14 +31,9 @@ class TouchController extends Controls {
 		this.verticalMin = 0;
 		this.verticalMax = Math.PI;
 
-		this.mouseDragOn = false;
-
 		// internals
 
 		this._autoSpeedFactor = 0.0;
-
-		this._pointerX = 0;
-		this._pointerY = 0;
 
 		this._moveForward = false;
 		this._moveBackward = false;
@@ -55,18 +50,8 @@ class TouchController extends Controls {
 		this._lon = 0;
 
 		// event listeners
-		// console.log(_moves);
-
-		this._onPointerMove = onPointerMove.bind(this);
-		this._onPointerDown = onPointerDown.bind(this);
-		this._onPointerUp = onPointerUp.bind(this);
-		this._onContextMenu = onContextMenu.bind(this);
-		this._onKeyDown = onKeyDown.bind(this);
-		this._onKeyUp = onKeyUp.bind(this);
 		this._onTouchStart = onTouchStart.bind(this);
 		this._onTouchEnd = onTouchEnd.bind(this);
-
-		//
 
 		if (domElement !== null) {
 			this.connect();
@@ -78,14 +63,6 @@ class TouchController extends Controls {
 	}
 
 	connect() {
-		window.addEventListener('keydown', this._onKeyDown);
-		window.addEventListener('keyup', this._onKeyUp);
-
-		this.domElement.addEventListener('pointermove', this._onPointerMove);
-		this.domElement.addEventListener('pointerdown', this._onPointerDown);
-		this.domElement.addEventListener('pointerup', this._onPointerUp);
-		this.domElement.addEventListener('contextmenu', this._onContextMenu);
-
 		this._moves.forEach((move) => {
 			move.addEventListener('touchstart', this._onTouchStart);
 		});
@@ -101,14 +78,6 @@ class TouchController extends Controls {
 	}
 
 	disconnect() {
-		window.removeEventListener('keydown', this._onKeyDown);
-		window.removeEventListener('keyup', this._onKeyUp);
-
-		this.domElement.removeEventListener('pointerdown', this._onPointerMove);
-		this.domElement.removeEventListener('pointermove', this._onPointerDown);
-		this.domElement.removeEventListener('pointerup', this._onPointerUp);
-		this.domElement.removeEventListener('contextmenu', this._onContextMenu);
-
 		this._moves.removeEventListener('touchstart', this._onTouchStart);
 		this._moves.removeEventListener('touchend', this._onTouchEnd);
 		this._pan.removeEventListener('touchstart', this._onTouchStart);
@@ -183,33 +152,6 @@ class TouchController extends Controls {
 			verticalLookRatio = Math.PI / (this.verticalMax - this.verticalMin);
 		}
 
-		// this._lon -= this._pointerX * actualLookSpeed;
-		// if (this.lookVertical)
-		// 	this._lat -= this._pointerY * actualLookSpeed * verticalLookRatio;
-
-		// this._lat = Math.max(-85, Math.min(85, this._lat));
-
-		// let phi = MathUtils.degToRad(90 - this._lat);
-		// const theta = MathUtils.degToRad(this._lon);
-
-		// if (this.constrainVertical) {
-		// 	phi = MathUtils.mapLinear(
-		// 		phi,
-		// 		0,
-		// 		Math.PI,
-		// 		this.verticalMin,
-		// 		this.verticalMax
-		// 	);
-		// }
-
-		// const position = this.object.position;
-
-		// _targetPosition.setFromSphericalCoords(1, phi, theta).add(position);
-
-		// this.object.lookAt(_targetPosition);
-
-		// console.log(delta);
-
 		if (this._lookLeft) {
 			this.object.rotateY(MathUtils.degToRad(3) * delta * 10);
 		}
@@ -259,122 +201,6 @@ function onTouchEnd(event) {
 	} else if (event.currentTarget.classList.contains('pan-right')) {
 		this._lookRight = false;
 	}
-}
-
-// onTouchStart();
-
-function onPointerDown(event) {
-	if (this.domElement !== document) {
-		this.domElement.focus();
-	}
-
-	if (this.activeLook) {
-		switch (event.button) {
-			case 0:
-				this._moveForward = true;
-				break;
-			case 2:
-				this._moveBackward = true;
-				break;
-		}
-	}
-
-	this.mouseDragOn = true;
-}
-
-function onPointerUp(event) {
-	if (this.activeLook) {
-		switch (event.button) {
-			case 0:
-				this._moveForward = false;
-				break;
-			case 2:
-				this._moveBackward = false;
-				break;
-		}
-	}
-
-	this.mouseDragOn = false;
-}
-
-function onPointerMove(event) {
-	if (this.domElement === document) {
-		this._pointerX = event.pageX - this._viewHalfX;
-		this._pointerY = event.pageY - this._viewHalfY;
-	} else {
-		this._pointerX =
-			event.pageX - this.domElement.offsetLeft - this._viewHalfX;
-		this._pointerY =
-			event.pageY - this.domElement.offsetTop - this._viewHalfY;
-	}
-}
-
-function onKeyDown(event) {
-	switch (event.code) {
-		case 'ArrowUp':
-		case 'KeyW':
-			this._moveForward = true;
-			break;
-
-		case 'ArrowLeft':
-		case 'KeyA':
-			this._moveLeft = true;
-			break;
-
-		case 'ArrowDown':
-		case 'KeyS':
-			this._moveBackward = true;
-			break;
-
-		case 'ArrowRight':
-		case 'KeyD':
-			this._moveRight = true;
-			break;
-
-		case 'KeyR':
-			this._moveUp = true;
-			break;
-		case 'KeyF':
-			this._moveDown = true;
-			break;
-	}
-}
-
-function onKeyUp(event) {
-	switch (event.code) {
-		case 'ArrowUp':
-		case 'KeyW':
-			this._moveForward = false;
-			break;
-
-		case 'ArrowLeft':
-		case 'KeyA':
-			this._moveLeft = false;
-			break;
-
-		case 'ArrowDown':
-		case 'KeyS':
-			this._moveBackward = false;
-			break;
-
-		case 'ArrowRight':
-		case 'KeyD':
-			this._moveRight = false;
-			break;
-
-		case 'KeyR':
-			this._moveUp = false;
-			break;
-		case 'KeyF':
-			this._moveDown = false;
-			break;
-	}
-}
-
-function onContextMenu(event) {
-	if (this.enabled === false) return;
-
-	event.preventDefault();
 }
 
 export { TouchController };
