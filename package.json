@@ -1,0 +1,41 @@
+{
+  "name": "lodgify",
+  "version": "1.0.0",
+  "author": "Fresco & Fino Studio",
+  "description": "Javascript IIFE and minified version",
+  "license": "Copyright (C)",
+  "company": "Lodgify",
+  "browserslist": [
+    "last 2 version",
+    "safari 5",
+    "ie 8",
+    "ie 9",
+    "opera 12.1",
+    "ios 6",
+    "android 4"
+  ],
+  "scripts": {
+    "dev": "gulp watcher",
+    "build": "gulp build",
+    "min": "gulp minJs",
+    "bundle": "gulp bundle"
+  },
+  "devDependencies": {
+    "browser-sync": "latest",
+    "dotenv": "latest",
+    "gulp": "^5.0.0",
+    "gulp-autoprefixer": "latest",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-cli": "^3.0.0",
+    "gulp-esbuild": "^0.12.1",
+    "gulp-plumber": "latest",
+    "gulp-rename": "latest",
+    "gulp-sass": "^5.1.0",
+    "gulp-sourcemaps": "latest",
+    "node-sass": "latest",
+    "sass": "^1.63.3"
+  },
+  "dependencies": {
+    "three": "^0.168.0"
+  }
+}

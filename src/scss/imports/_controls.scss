@@ -1,0 +1,114 @@
+#wrapper {
+	position: relative;
+	background-color: rgb(81, 81, 81);
+	width: 100%;
+	height: 100%;
+}
+
+.controls {
+	position: fixed;
+	z-index: 1;
+	bottom: 0;
+	left: 0;
+
+	height: 30vh;
+	width: 100%;
+
+	background-color: rgba(0, 0, 0, 0.2);
+
+	border-top-left-radius: 10px;
+
+	.control {
+		position: absolute;
+		z-index: 2;
+		top: 50%;
+		transform: translateY(-50%);
+		background-color: rgba(0, 0, 0, 0.4);
+
+		height: 50%;
+		aspect-ratio: 1 / 1;
+
+		border-radius: 100%;
+	}
+
+	svg {
+		height: 40px;
+		width: 40px;
+	}
+
+	&__left {
+		left: 10vw;
+
+		svg {
+			position: absolute;
+			z-index: 3;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		.pan-left {
+			left: 15px;
+		}
+		.pan-right {
+			right: 15px;
+		}
+	}
+
+	&__right {
+		right: 10vw;
+
+		svg {
+			position: absolute;
+			z-index: 3;
+		}
+
+		.side-left,
+		.side-right {
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		.side-left {
+			left: 15px;
+		}
+
+		.side-right {
+			right: 15px;
+		}
+
+		.forward,
+		.back {
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		.forward {
+			top: 15px;
+		}
+
+		.back {
+			bottom: 15px;
+		}
+	}
+
+	&__close {
+		position: absolute;
+		top: 0;
+		right: 0;
+
+		z-index: 1;
+		height: 50px;
+		width: 50px;
+
+		transform: translateY(-100%);
+
+		background-color: rgba(0, 0, 0, 0.2);
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
+	}
+}
